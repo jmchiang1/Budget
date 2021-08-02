@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 import AppReducer from "./AppReducer";
 
-const initialState = {
+const initialState = {  //dummy data for initial state: testing purposes
   incomeTransactions: [
     { id: 1, incomeText: "Car sold", incomeAmount: 15000 },
     { id: 2, incomeText: "Job", incomeAmount: 5000 },
@@ -17,12 +17,20 @@ export const GlobalContext = createContext(initialState); //create the context a
 export const GlobalContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
+  const addIncome = incomeTransaction => {
+    dispatch({
+      type: "ADD_INCOME",
+      payload: incomeTransaction
+    });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
         //all children of contextProvider will have access to income and expense transactions
         incomeTransactions: state.incomeTransactions,
         expenseTransactions: state.expenseTransactions,
+        addIncome,
         }}>
       {children} 
     </GlobalContext.Provider>
