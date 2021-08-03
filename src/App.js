@@ -24,5 +24,3 @@ const App = () => {
 };
 
 export default App;
-
-//hello github!!! asdfasdlkasjdfl;aksdjfal;sdfj
