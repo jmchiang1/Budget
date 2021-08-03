@@ -9,7 +9,7 @@ const IncomeTransactions = ({ incomeTransaction }) => {
       <span className="transaction-text">{incomeTransaction.incomeText}</span>  
       {/* render out incomeTransaction text */}
       <span className="transaction-amount">
-        {incomeTransaction.incomeAmount}
+        ${(incomeTransaction.incomeAmount).toLocaleString()}
         {/* render out incomeTransaction amount */}
       </span>
       <button className="delete-btn" onClick={() => deleteTransaction(incomeTransaction.id)}>

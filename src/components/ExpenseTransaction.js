@@ -8,8 +8,8 @@ const ExpenseTransactions = ({expenseTransaction}) => {
 
     return (
         <li className="transaction" key="{ExpenseTransactions.id}" >
-        <span className="transaction-text">{expenseTransaction.expenseText}</span>
-        <span className="transaction-amount">{expenseTransaction.expenseAmount}</span>
+        <span className="transaction-text">{expenseTransaction.expenseText}</span>  
+        <span className="transaction-amount"> ${(expenseTransaction.expenseAmount).toLocaleString()}</span>
         <button className="delete-btn" onClick={() => deleteTransaction(expenseTransaction.id)}>
         <i className="fa fa-trash"></i>
         </button>

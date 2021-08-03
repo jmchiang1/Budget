@@ -6,41 +6,54 @@ const AddTransaction = () => {
   const { addIncome, addExpense } = useContext(GlobalContext);
   const [income, setIncome] = useState({
     //React Hook: allow using of state without writing a class.
-    //Set the following variables to empty string and 0 as the initial values
+    //Set the following variables to empty string and 0 as the initial values. This is data that will initially be rendered
     incomeText: "",
     incomeAmount: 0,
   });
 
+  // ADDING INCOME TEXT AND AMOUNT
+  // ADDING INCOME TEXT AND AMOUNT
+  // ADDING INCOME TEXT AND AMOUNT
+
   const { incomeText, incomeAmount } = income; 
-  //destructure incomeText and incomeAmount to equal just "income"
-  //useful for when you want to change both states with less words
+  //Destructure Text and Amount to equal just "income"
+  //Useful for when you want to change both states while only using one word. 
+  //Used on onChange function to re-render previously submitted data
 
   const onChangeIncome = (event) => {
     //onChange handle event with event name and value
-    //store expense and amount in the global state
+    //Store expense and amount in the global state
     setIncome({ ...income, [event.target.name]: event.target.value });
-    //spread syntax: allows arrays/string to be expanded in places where 0 or more variables are expected
+    //Spread syntax: allows arrays/string to be expanded in places where 0 or more variables are expected
   };
 
   const onSubmitIncome = (event) => {
-    event.preventDefault();
+    event.preventDefault(); //prevent page from refreshing upon submission
 
-    const newIncomeTransaction = {
-      id: uuidv4(), //generate random id when new income gets added
-      incomeText,
-      incomeAmount: incomeAmount * 1,
-    };
-    addIncome(newIncomeTransaction); //add curent income to the list and re-render new list
-
-    setIncome({
-      //set the text and amount back to zero once you press submit. Code on line 71 / 79
-      incomeText: "",
-      incomeAmount: 0,
-    });
+    if (incomeText) { //If text exist, then execute the following code...
+      //Ensures that empty text does that get passed in and create errors or ugly UI experience
+      const newIncomeTransaction = {  //create new transaction object here
+        id: uuidv4(), //generate random id when new income gets added
+        incomeText,
+        incomeAmount: incomeAmount * 1,
+      };
+      addIncome(newIncomeTransaction); //add curent income to the history list and re-render
+      //addIncome function defined in GlobalState.js and AppReducer as Redux Reducer
+  
+      setIncome({
+        //setIncome = the current state of the income data.
+        //set the text and amount back to zero once you press submit. Code on line 71 / 79
+        incomeText: "",
+        incomeAmount: 0,
+      });
+    }
   };
 
+  // ADDING EXPENSE TEXT AND AMOUNT
+  // ADDING EXPENSE TEXT AND AMOUNT
+  // ADDING EXPENSE TEXT AND AMOUNT
+
   const [expense, setExpense] = useState({ 
-    //text and number are both empty at first.
     expenseText: "",
     expenseAmount: 0,
   });
@@ -54,22 +67,25 @@ const AddTransaction = () => {
   const onSubmitExpense = (event) => {
     event.preventDefault();
 
-    const newExpenseTransaction = {
-      id: uuidv4(),
-      expenseText,
-      expenseAmount: expenseAmount * 1,
-    };
-    addExpense(newExpenseTransaction);
-
-    setExpense({
-      expenseText: "",
-      expenseAmount: 0,
-    });
+    if (expenseText){
+      const newExpenseTransaction = {
+        id: uuidv4(),
+        expenseText,
+        expenseAmount: expenseAmount * 1,
+      };
+      addExpense(newExpenseTransaction);
+  
+      setExpense({
+        expenseText: "",
+        expenseAmount: 0,
+      });
+    }
   };
 
   return (
     <div className="form-wrapper">
-      <form onSubmit={onSubmitIncome}>
+      <form onSubmit={onSubmitIncome}> 
+      {/* form submit button invokes the onSubmitIncome function defined above  */}
         <div className="input-group income">
           <input
             type="text"
@@ -77,12 +93,12 @@ const AddTransaction = () => {
             value={incomeText}  //change text information
             placeholder="Add Income"
             autoComplete="off"
-            onChange={onChangeIncome} //pass onChange handle function
+            onChange={onChangeIncome} //changing the input fields will trigger onChange function, which will store all data in local storage
           />
           <input
             type="number"
             name="incomeAmount"
-            value={incomeAmount}    //change amount information
+            value={incomeAmount}
             placeholder="Amount"
             autoComplete="off"
             onChange={onChangeIncome}

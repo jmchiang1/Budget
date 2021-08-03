@@ -2,8 +2,9 @@ import React, { createContext, useReducer, useEffect } from "react";
 import AppReducer from "./AppReducer";
 
 const initialState = {
-  incomeTransactions: [],
-  expenseTransactions: [],
+  //render data from local storage if avalaible, or empty array if none
+  incomeTransactions: JSON.parse(localStorage.getItem('incomeTransactions')) || [],
+  expenseTransactions: JSON.parse(localStorage.getItem('expenseTransactions')) || [],
 };
 
 export const GlobalContext = createContext(initialState); //create the context api here
@@ -21,7 +22,7 @@ export const GlobalContextProvider = ({ children }) => {
     localStorage.setItem("expenseTransactions", JSON.stringify(state.expenseTransactions))
   })
 
-  const addIncome = incomeTransaction => {  //Redux Action creator with dispatch
+  const addIncome = incomeTransaction => {  //Redux Action creator with dispatch function
     dispatch({
       type: "ADD_INCOME",
       payload: incomeTransaction
