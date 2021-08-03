@@ -5,15 +5,19 @@ import { GlobalContext } from "../context/GlobalState";
 const AddTransaction = () => {
   const { addIncome, addExpense } = useContext(GlobalContext);
   const [income, setIncome] = useState({
-    //React Hook: allow using of state without writing a class. Set the following variables to empty string and 0.
+    //React Hook: allow using of state without writing a class.
+    //Set the following variables to empty string and 0 as the initial values
     incomeText: "",
     incomeAmount: 0,
   });
 
-  const { incomeText, incomeAmount } = income;
+  const { incomeText, incomeAmount } = income; 
+  //destructure incomeText and incomeAmount to equal just "income"
+  //useful for when you want to change both states with less words
 
   const onChangeIncome = (event) => {
     //onChange handle event with event name and value
+    //store expense and amount in the global state
     setIncome({ ...income, [event.target.name]: event.target.value });
     //spread syntax: allows arrays/string to be expanded in places where 0 or more variables are expected
   };
@@ -26,15 +30,17 @@ const AddTransaction = () => {
       incomeText,
       incomeAmount: incomeAmount * 1,
     };
-    addIncome(newIncomeTransaction);
+    addIncome(newIncomeTransaction); //add curent income to the list and re-render new list
 
-    setIncome({         //set the text and amount back to zero once you press submit. Code on line 71 / 79
-        incomeText: "",
-        incomeAmount: 0
-    })
+    setIncome({
+      //set the text and amount back to zero once you press submit. Code on line 71 / 79
+      incomeText: "",
+      incomeAmount: 0,
+    });
   };
 
-  const [expense, setExpense] = useState({
+  const [expense, setExpense] = useState({ 
+    //text and number are both empty at first.
     expenseText: "",
     expenseAmount: 0,
   });
@@ -56,9 +62,9 @@ const AddTransaction = () => {
     addExpense(newExpenseTransaction);
 
     setExpense({
-        expenseText: "",
-        expenseAmount: 0
-    })
+      expenseText: "",
+      expenseAmount: 0,
+    });
   };
 
   return (
@@ -68,18 +74,18 @@ const AddTransaction = () => {
           <input
             type="text"
             name="incomeText"
-            value={incomeText}
+            value={incomeText}  //change text information
             placeholder="Add Income"
             autoComplete="off"
-            onChange={onChangeIncome} //pass onChange handle function from line 10
+            onChange={onChangeIncome} //pass onChange handle function
           />
           <input
             type="number"
             name="incomeAmount"
-            value={incomeAmount}
+            value={incomeAmount}    //change amount information
             placeholder="Amount"
             autoComplete="off"
-            onChange={onChangeIncome} //pass onChange handle function from line 10
+            onChange={onChangeIncome}
           />
           <input type="Submit" value="Submit" />
         </div>

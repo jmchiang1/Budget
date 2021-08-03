@@ -31,6 +31,13 @@ export const GlobalContextProvider = ({ children }) => {
     });
   };
 
+  const deleteTransaction = (id) => {
+    dispatch({
+      type: "DELETE_TRANSACTION",
+      payload: id,
+    })
+  }
+
   return (
     <GlobalContext.Provider 
     //Provider accepts a value prop to be passed to all it's children
@@ -38,7 +45,8 @@ export const GlobalContextProvider = ({ children }) => {
         incomeTransactions: state.incomeTransactions,
         expenseTransactions: state.expenseTransactions,
         addIncome,
-        addExpense
+        addExpense,
+        deleteTransaction,
         }}>
       {children} 
     </GlobalContext.Provider>
