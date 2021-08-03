@@ -14,23 +14,31 @@ const initialState = {  //dummy data for initial state: testing purposes
 
 export const GlobalContext = createContext(initialState); //create the context api here
 
-export const GlobalContextProvider = ({ children }) => {
+export const GlobalContextProvider = ({ children }) => { 
+  //all children of contextProvider will have access to income and expense transactions
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  const addIncome = incomeTransaction => {
+  const addIncome = incomeTransaction => {  //Redux Action creator with dispatch
     dispatch({
       type: "ADD_INCOME",
       payload: incomeTransaction
     });
   };
+  const addExpense = expenseTransaction => {
+    dispatch({
+      type: "ADD_EXPENSE",
+      payload: expenseTransaction
+    });
+  };
 
   return (
-    <GlobalContext.Provider
+    <GlobalContext.Provider 
+    //Provider accepts a value prop to be passed to all it's children
       value={{
-        //all children of contextProvider will have access to income and expense transactions
         incomeTransactions: state.incomeTransactions,
         expenseTransactions: state.expenseTransactions,
         addIncome,
+        addExpense
         }}>
       {children} 
     </GlobalContext.Provider>
